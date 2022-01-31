@@ -16,15 +16,15 @@
 ## General info
 * The project was created in order to improve my skills in the field of automation tests, after a 3-month bootcamp 'software tester with an introduction to automation'. 
 * Inside I created few pages of website and for them 24 test case.
-* Code was written with usign Page Object Model and Page Factory.
+* Code was written with using Page Object Model and Page Factory.
 * Of course, there are more test cases to create, but I created a few to get to know Selenium WebDriver better.
 
 
 
 ## Technologies Used
-* Java - v.11.0.13
-* Maven - v.11.0.13
-* Selenium WebDriver - v.4.1.0
+* Java - v.11
+* Maven - v.3
+* Selenium WebDriver - v.4
 * JUnit 5 jupiter - v.5.8.2
 
 
