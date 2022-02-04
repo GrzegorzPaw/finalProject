@@ -1,18 +1,20 @@
 package tests;
 
-import base.BaseTest;
 import com.github.javafaker.Faker;
-import navigation.MainPage;
-import navigation.Registration;
+import pages.HomePage;
+import pages.RegistrationPage;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.Select;
 
-public class RegistrationTests extends BaseTest {
+public class RegistrationPageTests extends BaseTest {
 
-    Registration registration = new Registration(driver);
-    MainPage mainPage = new MainPage(driver);
+    RegistrationPage registrationPage = new RegistrationPage(driver);
+    HomePage homePage = new HomePage(driver);
+
+    private static final String EXISTING_USERNAME_LOGIN = "maniek1@man.wp.pl";
+    private static final String INVALID_LOGIN_FORMAT = "nmj;34567hd@.pl";
 
     @Test
     void shouldRegisterCorrectly() {
@@ -20,9 +22,10 @@ public class RegistrationTests extends BaseTest {
         Faker faker = new Faker();
         String uniqueEmail = faker.name().firstName() + faker.name().lastName() + faker.random().nextInt(1000) + "@gamil.com";
 
-        mainPage.clickSignInButton();
-        driver.findElement(By.id("email_create")).sendKeys(uniqueEmail);
-        driver.findElement(By.id("SubmitCreate")).click();
+        homePage.clickSignInButton();
+        registrationPage.fillCreateAccountField(uniqueEmail);
+        registrationPage.submitCreateButton();
+
         driver.findElement(By.id("id_gender2")).click();
         driver.findElement(By.id("customer_firstname")).sendKeys(faker.name().firstName());
         driver.findElement(By.id("customer_lastname")).sendKeys(faker.name().lastName());
@@ -52,9 +55,9 @@ public class RegistrationTests extends BaseTest {
     @Test
     void shouldNotRegisterWithTheSameLoginValue() {
 
-        mainPage.clickSignInButton();
-        driver.findElement(By.id("email_create")).sendKeys("maniek1@man.wp.pl");
-        driver.findElement(By.id("SubmitCreate")).click();
+        homePage.clickSignInButton();
+        registrationPage.fillCreateAccountField(EXISTING_USERNAME_LOGIN);
+        registrationPage.submitCreateButton();
         Assertions.assertFalse(driver.getCurrentUrl().contains("controller=my-account"), "You have been logged in with the same login value");
 
 
@@ -62,11 +65,15 @@ public class RegistrationTests extends BaseTest {
 
     @Test
     void shouldNotRegisterWithoutFillingInTheReguiredFields() {
+
         Faker faker = new Faker();
         String uniqueEmail = faker.name().firstName() + faker.name().lastName() + faker.random().nextInt(1000) + "@gamil.com";
-        mainPage.clickSignInButton();
-        driver.findElement(By.id("email_create")).sendKeys(uniqueEmail);
-        driver.findElement(By.id("SubmitCreate")).click();
+
+        homePage.clickSignInButton();
+        registrationPage.fillCreateAccountField(uniqueEmail);
+        registrationPage.submitCreateButton();
+
+
         driver.findElement(By.id("id_gender2")).click();
         driver.findElement(By.id("customer_lastname")).sendKeys(faker.name().lastName());
         driver.findElement(By.id("passwd")).sendKeys("1234567");
@@ -94,9 +101,9 @@ public class RegistrationTests extends BaseTest {
     @Test
     void shouldNotRegisterByTypingIncorrectEmailAddressFormat() {
 
-        mainPage.clickSignInButton();
-        driver.findElement(By.id("email_create")).sendKeys("nmj;34567hd@.pl");
-        driver.findElement(By.id("SubmitCreate")).click();
+        homePage.clickSignInButton();
+        registrationPage.fillCreateAccountField(INVALID_LOGIN_FORMAT);
+        registrationPage.submitCreateButton();
         Assertions.assertEquals("Invalid email address.", driver.findElement(By.xpath("//*[@id=\"create_account_error\"]/ol/li")).getText(), "An identical item was not found");
     }
 

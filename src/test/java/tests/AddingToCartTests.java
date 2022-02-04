@@ -1,7 +1,6 @@
 package tests;
 
-import base.BaseTest;
-import navigation.AddingToCart;
+import pages.AddingToCart;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

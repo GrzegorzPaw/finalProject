@@ -1,9 +1,7 @@
 package tests;
 
-import base.BaseTest;
-import navigation.AddingToCart;
-import navigation.LoginPage;
-import navigation.MakingAPurchase;
+import pages.LoginPage;
+import pages.MakingAPurchase;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;

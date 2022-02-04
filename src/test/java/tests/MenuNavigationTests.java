@@ -1,7 +1,6 @@
 package tests;
 
-import base.BaseTest;
-import navigation.MenuNavigation;
+import pages.MenuNavigation;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
@@ -29,7 +28,7 @@ public class MenuNavigationTests extends BaseTest {
     @Test
     void shouldGoToTheContactPage() {
 
-        menuNavigation.contactPage();
+        menuNavigation.contactPageButton();
         Assertions.assertTrue(driver.getCurrentUrl().contains("controller=contact"), "operation failed");
     }
 
