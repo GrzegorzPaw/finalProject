@@ -2,6 +2,7 @@ package tests;
 
 import com.github.javafaker.Faker;
 import pages.HomePage;
+import pages.LoginPage;
 import pages.RegistrationPage;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -12,9 +13,14 @@ public class RegistrationPageTests extends BaseTest {
 
     RegistrationPage registrationPage = new RegistrationPage(driver);
     HomePage homePage = new HomePage(driver);
+    LoginPage loginPage = new LoginPage(driver);
+
 
     private static final String EXISTING_USERNAME_LOGIN = "maniek1@man.wp.pl";
     private static final String INVALID_LOGIN_FORMAT = "nmj;34567hd@.pl";
+    private static final String EXISTING_PASSWORD = "1234567";
+    private static final String POSTCODE = "00000";
+    private static final String ADDRESS_ALIAS = "ASdasda 1231";
 
     @Test
     void shouldRegisterCorrectly() {
@@ -25,30 +31,18 @@ public class RegistrationPageTests extends BaseTest {
         homePage.clickSignInButton();
         registrationPage.fillCreateAccountField(uniqueEmail);
         registrationPage.submitCreateButton();
-
-        driver.findElement(By.id("id_gender2")).click();
-        driver.findElement(By.id("customer_firstname")).sendKeys(faker.name().firstName());
-        driver.findElement(By.id("customer_lastname")).sendKeys(faker.name().lastName());
-        driver.findElement(By.id("passwd")).sendKeys("1234567");
-        Select day = new Select(driver.findElement(By.id("days")));
-        day.selectByValue("2");
-        Select month = new Select(driver.findElement(By.id("months")));
-        month.selectByValue("4");
-        Select years = new Select(driver.findElement(By.id("years")));
-        years.selectByValue("1982");
-        driver.findElement(By.id("newsletter")).click();
-        driver.findElement(By.id("company")).sendKeys(faker.company().name());
-        driver.findElement(By.id("address1")).sendKeys(faker.address().streetAddress() + " 12");
-        driver.findElement(By.id("city")).sendKeys(faker.address().city());
-        Select state = new Select(driver.findElement(By.id("id_state")));
-        state.selectByValue("1");
-        driver.findElement(By.id("postcode")).sendKeys("00000");
-        driver.findElement(By.id("phone_mobile")).sendKeys(String.valueOf(faker.number().randomNumber()));
-        driver.findElement(By.id("alias")).clear();
-        driver.findElement(By.id("alias")).sendKeys("ASdasda 1231");
-        driver.findElement(By.id("submitAccount")).click();
+        registrationPage.chooseGender();
+        registrationPage.enterYourFirstAndLastName(faker.name().firstName(), faker.name().lastName());
+        registrationPage.enterYourPassword(EXISTING_PASSWORD);
+        registrationPage.dateOfBirth();
+        registrationPage.newsletterButtonClick();
+        registrationPage.giveYourAddress(faker.company().name(), faker.address().streetAddress() + " 12", faker.address().city());
+        registrationPage.state();
+        registrationPage.yourPostcodeAndMobilePhone(POSTCODE, String.valueOf((faker.number().randomNumber())));
+        registrationPage.assignAnAddressAlias(ADDRESS_ALIAS);
+        registrationPage.submitAccountButton();
         Assertions.assertTrue(driver.getCurrentUrl().contains("controller=my-account"), "Registration failed");
-        driver.findElement(By.className("logout")).click();
+        loginPage.clickSignOutButton();
 
     }
 
@@ -72,29 +66,16 @@ public class RegistrationPageTests extends BaseTest {
         homePage.clickSignInButton();
         registrationPage.fillCreateAccountField(uniqueEmail);
         registrationPage.submitCreateButton();
-
-
-        driver.findElement(By.id("id_gender2")).click();
-        driver.findElement(By.id("customer_lastname")).sendKeys(faker.name().lastName());
-        driver.findElement(By.id("passwd")).sendKeys("1234567");
-        Select day = new Select(driver.findElement(By.id("days")));
-        day.selectByValue("2");
-        Select month = new Select(driver.findElement(By.id("months")));
-        month.selectByValue("4");
-        Select years = new Select(driver.findElement(By.id("years")));
-        years.selectByValue("1982");
-        driver.findElement(By.id("newsletter")).click();
-        driver.findElement(By.id("company")).sendKeys(faker.company().name());
-        driver.findElement(By.id("address1")).sendKeys(faker.address().streetAddress() + " 12");
-        driver.findElement(By.id("city")).sendKeys(faker.address().city());
-        Select state = new Select(driver.findElement(By.id("id_state")));
-        state.selectByValue("1");
-        driver.findElement(By.id("postcode")).sendKeys("00000");
-        driver.findElement(By.id("phone_mobile")).sendKeys(String.valueOf(faker.number().randomNumber()));
-        driver.findElement(By.id("alias")).clear();
-        driver.findElement(By.id("alias")).sendKeys("ASdasda 1231");
-        driver.findElement(By.id("submitAccount")).click();
-        Assertions.assertEquals("firstname is required.", driver.findElement(By.xpath("//*[@id=\"center_column\"]/div/ol/li[1]")).getText(), "An identical item was not found");
+        registrationPage.chooseGender();
+        registrationPage.enterYourFirstAndLastName(faker.name().firstName(), faker.name().lastName());
+        registrationPage.dateOfBirth();
+        registrationPage.newsletterButtonClick();
+        registrationPage.giveYourAddress(faker.company().name(), faker.address().streetAddress() + " 12", faker.address().city());
+        registrationPage.state();
+        registrationPage.yourPostcodeAndMobilePhone(POSTCODE, String.valueOf((faker.number().randomNumber())));
+        registrationPage.assignAnAddressAlias(ADDRESS_ALIAS);
+        registrationPage.submitAccountButton();
+        Assertions.assertEquals("passwd is required.", driver.findElement(By.xpath("//*[@id=\"center_column\"]/div/ol/li[1]")).getText(), "An identical item was not found");
 
     }
 
