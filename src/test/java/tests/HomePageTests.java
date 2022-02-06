@@ -16,7 +16,6 @@ public class HomePageTests extends BaseTest {
     HomePage homePage = new HomePage(driver);
     SearchResultsPage searchResultsPage = new SearchResultsPage(driver);
 
-
     private static final String EXISTING_USERNAME_LOGIN = "maniek1@man.wp.pl";
 
     @AfterEach
