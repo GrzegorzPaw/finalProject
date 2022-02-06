@@ -1,26 +1,65 @@
 package tests;
 
-import pages.MenuNavigation;
+import com.github.javafaker.Faker;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import pages.HomePage;
+import pages.SearchResultsPage;
 
 import java.util.List;
 
-public class MenuNavigationTests extends BaseTest {
+public class HomePageTests extends BaseTest {
 
-    MenuNavigation menuNavigation = new MenuNavigation(driver);
+    HomePage homePage = new HomePage(driver);
+    SearchResultsPage searchResultsPage = new SearchResultsPage(driver);
+
+
+    private static final String EXISTING_USERNAME_LOGIN = "maniek1@man.wp.pl";
+
+    @AfterEach
+    void clearCookies() {
+        driver.manage().deleteAllCookies();
+    }
+
+    @Test
+    void shouldSubscribeToTheNewsletterCorrectly() {
+        Faker faker = new Faker();
+        String uniqueEmail = faker.name().firstName() + faker.name().lastName() + faker.random().nextInt(1000) + "@gamil.com";
+        homePage.clickOnTheTextField();
+        homePage.enterYourEmail(uniqueEmail);
+        homePage.submitNewsletterButton();
+        Assertions.assertEquals("Newsletter : You have successfully subscribed to this newsletter.", driver.findElement(By.xpath("//*[@id=\"columns\"]/p")).getText(), "An identical item was not found");
+    }
+
+    @Test
+    void shouldNotSubscribeToTheNewsletterByProvidingAnEmailAddressAlreadyRegistered() {
+
+        homePage.clickOnTheTextField();
+        homePage.enterYourEmail(EXISTING_USERNAME_LOGIN);
+        homePage.submitNewsletterButton();
+        Assertions.assertEquals("Newsletter : This email address is already registered.", driver.findElement(By.xpath("//*[@id=\"columns\"]/p")).getText(), "An identical item was not found");
+    }
+
+    @Test
+    void shouldNotSubscribeToTheNewsletterWithoutProvidingAnEmailAddress() {
+
+        homePage.clickOnTheTextField();
+        homePage.submitNewsletterButton();
+        Assertions.assertEquals("Newsletter : Invalid email address.", driver.findElement(By.xpath("//*[@id=\"columns\"]/p")).getText(), "An identical item was not found");
+    }
 
     @Test
     void shouldFindLoginAndSearchBoxOnTheHomePageAndTheLoginPage() {
 
         Assertions.assertTrue(driver.findElement(By.xpath("//*[@id=\"header_logo\"]/a/img")).isDisplayed());
-        driver.findElement(By.name("submit_search")).click();
+        searchResultsPage.submitSearchButton();
         Assertions.assertTrue(driver.getCurrentUrl().contains("controller=search&orderby=position&orderway=desc&search_query=&submit_search="), "operation failed");
-        driver.findElement(By.xpath("//*[@id=\"header\"]/div[2]/div/div/nav/div[1]/a")).click();
+        homePage.clickSignInButton();
         Assertions.assertTrue(driver.findElement(By.xpath("//*[@id=\"header_logo\"]/a/img")).isDisplayed());
-        driver.findElement(By.name("submit_search")).click();
+        searchResultsPage.submitSearchButton();
         Assertions.assertTrue(driver.getCurrentUrl().contains("controller=search&orderby=position&orderway=desc&search_query=&submit_search="), "operation failed");
 
     }
@@ -28,7 +67,7 @@ public class MenuNavigationTests extends BaseTest {
     @Test
     void shouldGoToTheContactPage() {
 
-        menuNavigation.contactPageButton();
+        homePage.contactPageButton();
         Assertions.assertTrue(driver.getCurrentUrl().contains("controller=contact"), "operation failed");
     }
 
@@ -42,16 +81,17 @@ public class MenuNavigationTests extends BaseTest {
     @Test
     void shouldGoFromTheLoginPageToTheHomePage() {
 
-        driver.findElement(By.xpath("//*[@id=\"header\"]/div[2]/div/div/nav/div[1]/a")).click();
+        homePage.clickSignInButton();
         Assertions.assertTrue(driver.getCurrentUrl().contains("controller=authentication&back=my-account"), "operation failed");
-        driver.findElement(By.xpath("//*[@id=\"columns\"]/div[1]/a/i")).click();
+        homePage.pressBackToHomePage();
         Assertions.assertTrue(driver.getCurrentUrl().contains("index.php"), "operation failed");
     }
 
     @Test
-    void shouldFindTheFollowingFieldsOnTheLoginPageWomenDressesTshirtsReturnToHomeEmailAddressCreateAnAccoundEmailAddressPasswordForgotYourPasswordSignIn() {
+    void shouldFindAllFieldsOnTheLoginPage(){
 
-        driver.findElement(By.xpath("//*[@id=\"header\"]/div[2]/div/div/nav/div[1]/a")).click();
+
+        homePage.clickSignInButton();
         Assertions.assertTrue(driver.findElement(By.xpath("//*[@id=\"block_top_menu\"]/ul/li[1]/a")).isDisplayed());
         Assertions.assertTrue(driver.findElement(By.xpath("//*[@id=\"block_top_menu\"]/ul/li[2]/a")).isDisplayed());
         Assertions.assertTrue(driver.findElement(By.xpath("//*[@id=\"block_top_menu\"]/ul/li[3]/a")).isDisplayed());
