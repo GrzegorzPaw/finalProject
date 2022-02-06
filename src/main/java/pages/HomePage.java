@@ -25,6 +25,16 @@ public class HomePage {
     @FindBy(name = "submitNewsletter")
     private WebElement submitNewsletterButton;
 
+    @FindBy(id = "contact-link")
+    private WebElement contactPageButton;
+
+    @FindBy(xpath = "//*[@id=\"columns\"]/div[1]/a/i")
+    private WebElement goToHomePage;
+
+
+
+
+    public void contactPageButton() { contactPageButton.click(); }
 
     public void clickSignInButton() {
         System.out.println(driver.getCurrentUrl());
@@ -43,6 +53,8 @@ public class HomePage {
         System.out.println(driver.getCurrentUrl());
         submitNewsletterButton.click();
     }
-
+    public void pressBackToHomePage(){
+        goToHomePage.click();
+    }
 
 }

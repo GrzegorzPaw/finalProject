@@ -33,7 +33,7 @@ public class LoginPage {
         clickLoginButton();
     }
 
-    private void clickLoginButton() {
+    public void clickLoginButton() {
         loginButton.click();
     }
 
