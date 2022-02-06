@@ -18,10 +18,7 @@ public class HomePageTests extends BaseTest {
 
     private static final String EXISTING_USERNAME_LOGIN = "maniek1@man.wp.pl";
 
-    @AfterEach
-    void clearCookies() {
-        driver.manage().deleteAllCookies();
-    }
+
 
     @Test
     void shouldSubscribeToTheNewsletterCorrectly() {
@@ -76,7 +73,10 @@ public class HomePageTests extends BaseTest {
         List<WebElement> newsletter = driver.findElements(By.id("newsletter-input"));
         Assertions.assertEquals(1, newsletter.size(), "An identical item was not found");
     }
-
+    @AfterEach
+    void clearCookies() {
+        driver.manage().deleteAllCookies();
+    }
     @Test
     void shouldGoFromTheLoginPageToTheHomePage() {
 
