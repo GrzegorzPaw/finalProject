@@ -23,8 +23,8 @@ public class BaseTest {
         driver.navigate().to(URL);
     }
 
-//    @AfterAll
-//    static void tearDown() {
-//        driver.quit();
-//    }
+    @AfterAll
+    static void tearDown() {
+        driver.quit();
+    }
 }

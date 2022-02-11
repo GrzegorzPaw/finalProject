@@ -73,10 +73,7 @@ public class HomePageTests extends BaseTest {
         List<WebElement> newsletter = driver.findElements(By.id("newsletter-input"));
         Assertions.assertEquals(1, newsletter.size(), "An identical item was not found");
     }
-    @AfterEach
-    void clearCookies() {
-        driver.manage().deleteAllCookies();
-    }
+
     @Test
     void shouldGoFromTheLoginPageToTheHomePage() {
 
