@@ -15,19 +15,19 @@ public class OrderPage {
     }
 
 
-    @FindBy(xpath = "//*[@id=\"block_top_menu\"]/ul/li[3]")
+    @FindBy(css = "#block_top_menu > ul > li:nth-child(3)")
     private WebElement selectACategory;
 
-    @FindBy(xpath = "//*[@id=\"center_column\"]/ul/li/div/div[1]/div/a[1]/img")
+    @FindBy(xpath = "//a[@class='product_img_link']")
     private WebElement productSelection;
 
     @FindBy(id = "add_to_cart")
     private WebElement submit;
 
-    @FindBy(xpath = "//*[@id=\"layer_cart\"]/div[1]/div[1]/span")
+    @FindBy(xpath = "//span[@class='cross']")
     private  WebElement closeWindow;
 
-    @FindBy(xpath = "//*[@id=\"header\"]/div[3]/div/div/div[3]/div/a")
+    @FindBy(xpath = "//a[@title='View my shopping cart']")
     private  WebElement shoppingCartSummary;
 
     @FindBy(id = "1_1_0_0")
@@ -39,32 +39,30 @@ public class OrderPage {
     @FindBy(css = "#center_column > form > p > button > span")
     private WebElement goFurther;
 
-    @FindBy(xpath = "//*[@id=\"order\"]/div[2]/div/div/a")
+    @FindBy(xpath = "//a[@Title='Close']")
     private WebElement cross;
 
     @FindBy(id = "uniform-cgv")
     private WebElement agreement;
 
-    @FindBy(xpath = "//*[@id=\"form\"]/p/button/span")
+    @FindBy(name = "processCarrier")
     private  WebElement buttonClickSpan;
 
-    @FindBy(xpath = "//*[@id=\"HOOK_PAYMENT\"]/div[1]/div/p/a")
+    @FindBy(xpath = "//a[@class='bankwire']")
     private WebElement payByBank;
 
-    @FindBy(xpath = "//*[@id=\"cart_navigation\"]/button/span")
+    @FindBy(xpath = "//button[@class='button btn btn-default button-medium']")
     private  WebElement myOrder;
 
     @FindBy(css = "#form > p > button > span")
     private WebElement checkoutButton;
 
-    @FindBy(xpath = "//*[@id=\"HOOK_PAYMENT\"]/div[2]/div/p/a")
+    @FindBy(xpath = "//a[@class='cheque']")
     private WebElement payByCheck;
 
 
 
-    public void selectACategory() {
-        selectACategory.click();
-    }
+    public void selectACategory() {selectACategory.click();}
     public void productSelection() {
         productSelection.click();
     }

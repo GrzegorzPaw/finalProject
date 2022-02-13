@@ -47,8 +47,12 @@ public class LoginPage {
         signOutButton.click();
     }
 
+    public boolean isOnMyAccountPage() {
+        return driver.getCurrentUrl().contains("controller=my-account");
 
+    }
 }
+
 
 
 

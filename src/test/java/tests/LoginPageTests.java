@@ -21,14 +21,14 @@ public class LoginPageTests extends BaseTest {
     void shouldLoginProperly() {
         homePage.clickSignInButton();
         loginPage.login(EXISTING_USERNAME_LOGIN, EXISTING_USERNAME_PASSWORD);
-        Assertions.assertTrue(isOnMyAccountPage(), "there was an invalid login: is not on my account page");
+        Assertions.assertTrue(loginPage.isOnMyAccountPage(), "there was an invalid login: is not on my account page");
     }
 
     @Test
     void shouldNotLoginProperly() {
         homePage.clickSignInButton();
         loginPage.login(NOT_EXISTING_USERNAME_LOGIN, NOT_EXISTING_USERNAME_PASSWORD);
-        Assertions.assertFalse(isOnMyAccountPage(), "login is correct: is On My Account Page");
+        Assertions.assertFalse(loginPage.isOnMyAccountPage(), "login is correct: is On My Account Page");
 
     }
 
@@ -36,7 +36,7 @@ public class LoginPageTests extends BaseTest {
     void shouldNotLoginWithoutLoginValue() {
         homePage.clickSignInButton();
         loginPage.login(NOT_EXISTING_USERNAME_LOGIN, EXISTING_USERNAME_PASSWORD);
-        Assertions.assertFalse(isOnMyAccountPage(), "login is correct: is On My Account Page");
+        Assertions.assertFalse(loginPage.isOnMyAccountPage(), "login is correct: is On My Account Page");
 
     }
 
@@ -44,7 +44,7 @@ public class LoginPageTests extends BaseTest {
     void shouldNotLoginWithoutPassword() {
         homePage.clickSignInButton();
         loginPage.login(EXISTING_USERNAME_LOGIN, NOT_EXISTING_USERNAME_PASSWORD);
-        Assertions.assertFalse(isOnMyAccountPage(), "login is correct: is On My Account Page");
+        Assertions.assertFalse(loginPage.isOnMyAccountPage(), "login is correct: is On My Account Page");
 
     }
 
@@ -53,17 +53,9 @@ public class LoginPageTests extends BaseTest {
 
         homePage.clickSignInButton();
         loginPage.login(EXISTING_USERNAME_LOGIN, EXISTING_USERNAME_PASSWORD);
-        Assertions.assertTrue(isOnMyAccountPage(), "login is correct: is On My Account Page");
+        Assertions.assertTrue(loginPage.isOnMyAccountPage(), "login is correct: is On My Account Page");
         loginPage.clickSignOutButton();
-        Assertions.assertTrue(isNotOnMyAccountPage(), "logout failed");
-    }
-
-    public boolean isOnMyAccountPage() {
-        return driver.getCurrentUrl().contains("controller=my-account");
-    }
-
-    private boolean isNotOnMyAccountPage() {
-        return driver.getCurrentUrl().contains("controller=authentication&back=my-account");
+        Assertions.assertFalse(loginPage.isOnMyAccountPage(), "logout failed");
     }
 }
 

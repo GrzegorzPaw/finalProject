@@ -1,5 +1,6 @@
 package pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -138,8 +139,9 @@ public class RegistrationPage {
         Select state = new Select(stateValue);
         state.selectByValue("1");
     }
-    public  void dateOfBirth(){
-        Select  day = new Select(daysOfBirth);
+
+    public void dateOfBirth() {
+        Select day = new Select(daysOfBirth);
         day.selectByValue("2");
         Select month = new Select(monthOfBirthInput);
         month.selectByValue("4");
@@ -147,6 +149,12 @@ public class RegistrationPage {
         year.selectByValue("1982");
 
     }
-}
 
+    public String authenticationAlertRegistration() {
+        return driver.findElement(By.xpath("//*[@id=\"center_column\"]/div/ol/li[1]")).getText();
+    }
+    public String authentationAlertEmailAddress(){
+        return driver.findElement(By.xpath("//*[@id=\"create_account_error\"]/ol/li")).getText();
+    }
+}
 

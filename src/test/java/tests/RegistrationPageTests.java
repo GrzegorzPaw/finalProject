@@ -41,7 +41,7 @@ public class RegistrationPageTests extends BaseTest {
         registrationPage.yourPostcodeAndMobilePhone(POSTCODE, String.valueOf((faker.number().randomNumber())));
         registrationPage.assignAnAddressAlias(ADDRESS_ALIAS);
         registrationPage.submitAccountButton();
-        Assertions.assertTrue(driver.getCurrentUrl().contains("controller=my-account"), "Registration failed");
+        Assertions.assertTrue(loginPage.isOnMyAccountPage(), "Registration failed");
         loginPage.clickSignOutButton();
 
     }
@@ -52,7 +52,7 @@ public class RegistrationPageTests extends BaseTest {
         homePage.clickSignInButton();
         registrationPage.fillCreateAccountField(EXISTING_USERNAME_LOGIN);
         registrationPage.submitCreateButton();
-        Assertions.assertFalse(driver.getCurrentUrl().contains("controller=my-account"), "You have been logged in with the same login value");
+        Assertions.assertFalse(loginPage.isOnMyAccountPage(), "You have been logged in with the same login value");
 
 
     }
@@ -75,7 +75,7 @@ public class RegistrationPageTests extends BaseTest {
         registrationPage.yourPostcodeAndMobilePhone(POSTCODE, String.valueOf((faker.number().randomNumber())));
         registrationPage.assignAnAddressAlias(ADDRESS_ALIAS);
         registrationPage.submitAccountButton();
-        Assertions.assertEquals("passwd is required.", driver.findElement(By.xpath("//*[@id=\"center_column\"]/div/ol/li[1]")).getText(), "An identical item was not found");
+        Assertions.assertEquals("passwd is required.", registrationPage.authenticationAlertRegistration(), "An identical item was not found");
 
     }
 
@@ -85,8 +85,7 @@ public class RegistrationPageTests extends BaseTest {
         homePage.clickSignInButton();
         registrationPage.fillCreateAccountField(INVALID_LOGIN_FORMAT);
         registrationPage.submitCreateButton();
-        Assertions.assertEquals("Invalid email address.", driver.findElement(By.xpath("//*[@id=\"create_account_error\"]/ol/li")).getText(), "An identical item was not found");
+        Assertions.assertEquals("Invalid email address.", registrationPage.authentationAlertEmailAddress(), "An identical item was not found");
     }
-
 
 }

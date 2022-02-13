@@ -28,7 +28,7 @@ public class HomePage {
     @FindBy(id = "contact-link")
     private WebElement contactPageButton;
 
-    @FindBy(xpath = "//*[@id=\"columns\"]/div[1]/a/i")
+    @FindBy(xpath = "//i[@class='icon-home']")
     private WebElement goToHomePage;
 
 

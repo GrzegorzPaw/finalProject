@@ -27,7 +27,7 @@ public class HomePageTests extends BaseTest {
         homePage.clickOnTheTextField();
         homePage.enterYourEmail(uniqueEmail);
         homePage.submitNewsletterButton();
-        Assertions.assertEquals("Newsletter : You have successfully subscribed to this newsletter.", driver.findElement(By.xpath("//*[@id=\"columns\"]/p")).getText(), "An identical item was not found");
+        Assertions.assertEquals("Newsletter : You have successfully subscribed to this newsletter.", driver.findElement(By.xpath("//p[@class='alert alert-success']")).getText(), "An identical item was not found");
     }
 
     @Test
@@ -36,7 +36,7 @@ public class HomePageTests extends BaseTest {
         homePage.clickOnTheTextField();
         homePage.enterYourEmail(EXISTING_USERNAME_LOGIN);
         homePage.submitNewsletterButton();
-        Assertions.assertEquals("Newsletter : This email address is already registered.", driver.findElement(By.xpath("//*[@id=\"columns\"]/p")).getText(), "An identical item was not found");
+        Assertions.assertEquals("Newsletter : This email address is already registered.", driver.findElement(By.xpath("//p[@class='alert alert-danger']")).getText(), "An identical item was not found");
     }
 
     @Test
@@ -44,17 +44,17 @@ public class HomePageTests extends BaseTest {
 
         homePage.clickOnTheTextField();
         homePage.submitNewsletterButton();
-        Assertions.assertEquals("Newsletter : Invalid email address.", driver.findElement(By.xpath("//*[@id=\"columns\"]/p")).getText(), "An identical item was not found");
+        Assertions.assertEquals("Newsletter : Invalid email address.", driver.findElement(By.xpath("//p[@class='alert alert-danger']")).getText(), "An identical item was not found");
     }
 
     @Test
     void shouldFindLoginAndSearchBoxOnTheHomePageAndTheLoginPage() {
 
-        Assertions.assertTrue(driver.findElement(By.xpath("//*[@id=\"header_logo\"]/a/img")).isDisplayed());
+        Assertions.assertTrue(driver.findElement(By.xpath("//img[@class='logo img-responsive']")).isDisplayed());
         searchResultsPage.submitSearchButton();
         Assertions.assertTrue(driver.getCurrentUrl().contains("controller=search&orderby=position&orderway=desc&search_query=&submit_search="), "operation failed");
         homePage.clickSignInButton();
-        Assertions.assertTrue(driver.findElement(By.xpath("//*[@id=\"header_logo\"]/a/img")).isDisplayed());
+        Assertions.assertTrue(driver.findElement(By.xpath("//img[@class='logo img-responsive']")).isDisplayed());
         searchResultsPage.submitSearchButton();
         Assertions.assertTrue(driver.getCurrentUrl().contains("controller=search&orderby=position&orderway=desc&search_query=&submit_search="), "operation failed");
 
@@ -88,16 +88,16 @@ public class HomePageTests extends BaseTest {
 
 
         homePage.clickSignInButton();
-        Assertions.assertTrue(driver.findElement(By.xpath("//*[@id=\"block_top_menu\"]/ul/li[1]/a")).isDisplayed());
+        Assertions.assertTrue(driver.findElement(By.xpath("//a[@title ='Women' or class='sf-with-ul']")).isDisplayed());
         Assertions.assertTrue(driver.findElement(By.xpath("//*[@id=\"block_top_menu\"]/ul/li[2]/a")).isDisplayed());
         Assertions.assertTrue(driver.findElement(By.xpath("//*[@id=\"block_top_menu\"]/ul/li[3]/a")).isDisplayed());
-        Assertions.assertTrue(driver.findElement(By.xpath("//*[@id=\"columns\"]/div[1]/a")).isDisplayed());
+        Assertions.assertTrue(driver.findElement(By.xpath("//i[@class='icon-home']")).isDisplayed());
         Assertions.assertTrue(driver.findElement(By.id("email_create")).isDisplayed());
-        Assertions.assertTrue(driver.findElement(By.xpath("//*[@id=\"SubmitCreate\"]/span")).isDisplayed());
+        Assertions.assertTrue(driver.findElement(By.xpath("//i[@class=\"icon-user left\"]")).isDisplayed());
         Assertions.assertTrue(driver.findElement(By.id("email")).isDisplayed());
         Assertions.assertTrue(driver.findElement(By.id("passwd")).isDisplayed());
-        Assertions.assertTrue(driver.findElement(By.xpath("//*[@id=\"login_form\"]/div/p[1]/a")).isDisplayed());
-        Assertions.assertTrue(driver.findElement(By.xpath("//*[@id=\"SubmitLogin\"]/span")).isDisplayed());
+        Assertions.assertTrue(driver.findElement(By.xpath("//p[@class='lost_password form-group']")).isDisplayed());
+        Assertions.assertTrue(driver.findElement(By.id("SubmitLogin")).isDisplayed());
     }
 
 }

@@ -20,11 +20,11 @@ public class SearchResultsTests extends BaseTest {
 
         searchResultsPage.productSearch(PRODUCT_AVAILABLE_IN_THE_STORE);
         searchResultsPage.submitSearchButton();
-        Assertions.assertTrue(driver.getCurrentUrl().contains("controller=search&orderby=position&orderway=desc&search_query=T-SHIRTS&submit_search="), "incorrect search");
+        Assertions.assertTrue(searchResultsPage.theProductHasBeenAddedT_SHIRTS(), "incorrect search");
         searchResultsPage.clearTheSearchField();
         searchResultsPage.productSearch(NEXT_PRODUCT_AVAILABLE_IN_THE_STORE);
         searchResultsPage.submitSearchButton();
-        Assertions.assertTrue(driver.getCurrentUrl().contains("controller=search&orderby=position&orderway=desc&search_query=Dressy&submit_search="), "incorrect search");
+        Assertions.assertTrue(searchResultsPage.theProductHasBeenAdded_Dressy(), "incorrect search");
     }
 
     @Test
@@ -32,7 +32,7 @@ public class SearchResultsTests extends BaseTest {
 
         searchResultsPage.productSearch(PRODUCT_THAT_IS_NOT_IN_THE_STORE);
         searchResultsPage.submitSearchButton();
-        Assertions.assertEquals("No results were found for your search \"women's pants\"", driver.findElement(By.xpath("//*[@id=\"center_column\"]/p")).getText(), "An identical item was not found");
+        Assertions.assertEquals("No results were found for your search \"women's pants\"", searchResultsPage.authenticationAlert(), "An identical item was not found");
         searchResultsPage.clearTheSearchField();
     }
 
